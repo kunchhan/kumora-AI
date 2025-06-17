@@ -7,7 +7,7 @@
 <p align="center">
   <strong>Kumora begins where traditional AI falls silent—when emotion needs a mirror, not just a solution.</strong>
   <br><br>
-  <strong></strong>Beyond Answers: AI with a Heart</p>strong>
+  <strong></strong>Beyond Answers: AI with a Heart</strong></p>
   <br><br>
   • <a href="#introduction">Introduction</a><br><br> •
   <a href="#key-features">Key Features</a><br><br> •
