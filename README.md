@@ -1,4 +1,4 @@
-# Kumora: An Empathetic AI Companion
+# Kumora: A Soulful AI for Emotional Intelligence and Self-Reflection
 
 <p align="center">
   <img src="https://imgur.com/ihIMBDF.png" alt="Kumora Logo" width="400">
@@ -6,6 +6,8 @@
 
 <p align="center">
   <strong>Kumora begins where traditional AI falls silent—when emotion needs a mirror, not just a solution.</strong>
+  <br><br>
+  <strong></strong>Beyond Answers: AI with a Heart</p>strong>
   <br><br>
   • <a href="#introduction">Introduction</a><br><br> •
   <a href="#key-features">Key Features</a><br><br> •
