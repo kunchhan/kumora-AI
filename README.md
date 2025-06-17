@@ -8,8 +8,8 @@
   <strong>Kumora begins where traditional AI falls silent—when emotion needs a mirror, not just a solution.</strong>
   <br><br>
   • <a href="#introduction">Introduction</a><br><br> •
-  <a href="#features">Key Features</a><br><br> •
-  <a href="#architecture">System Architecture</a><br><br> •
+  <a href="#key-features">Key Features</a><br><br> •
+  <a href="#system-architecture">System Architecture</a><br><br> •
   <a href="#technology-stack">Tech Stack</a><br><br> •
   <a href="#getting-started">Getting Started</a><br><br> •
   <a href="#project-structure">Project Structure</a><br><br> •
