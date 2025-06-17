@@ -145,20 +145,26 @@ The project is organized into modular components for clarity and maintainability
 
 ```
 kumora-project/
-├── kumora_modules/
-│   ├── emotion_intelligence_system/
-│   ├── context_management/
-│   └── response_generation/
-├── static/                 # CSS and JavaScript files
+├── emotion_intelligence_system/
+│   └── emotion_classifier.py
+├── context_management/
+│   ├── context_management_system.py
+│   └── kumora_context.py
+└── response_generation
+│    ├── class_utils.py
+│    ├── prompt_engineering_system.py
+│    └── prompt_utils.py
+├── static/                   # CSS and JavaScript files
 │   ├── style.css
 │   └── main.js
-├── templates/              # Flask HTML templates
+├── templates/                # Flask HTML templates
 │   └── index.html
-├── .env                    # Secret API keys (DO NOT COMMIT)
+├── .env                      # Secret API keys (DO NOT COMMIT)
 ├── .gitignore
-├── app.py                  # Main Flask application
+├── app.py                    # Main Flask application
+├── kumora_chat_terminal.py   # Open Interactive Chat Window in the terminal
 ├── kumora_response_engine.py # Core engine logic
-└── requirements.txt        # Python dependencies
+└── requirements.txt          # Python dependencies
 ```
 
 ## Contribution
