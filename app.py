@@ -15,7 +15,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # --- Global Kumora Engine Instance ---
-# This is the single instance of your engine that the app will use.
+# This is the single instance of Kumora engine that the app will use.
 # It's initialized once when the application starts.
 kumora_engine: KumoraResponseEngine
 

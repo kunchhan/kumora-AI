@@ -1,0 +1,72 @@
+# ==============================================================================
+# Dependencies for the Kumora Empathetic AI Companion Project
+#
+# To install all dependencies, run:
+# pip install -r requirements.txt
+# ==============================================================================
+
+# --- Core Web Framework ---
+# Flask is used to build the web application and API endpoints.
+# The [async] extra is CRITICAL for running asynchronous views needed by the response engine.
+Flask[async]
+
+
+# --- NLP & Machine Learning Core ---
+# PyTorch is the foundational deep learning framework for the emotion classifier and local LLM.
+torch
+
+# Hugging Face Transformers provides the models (DistilBERT) and tokenizers.
+transformers
+
+# Scikit-learn is used for data splitting and performance metrics in the emotion classifier.
+scikit-learn
+
+# Pandas and NumPy are essential for data manipulation.
+pandas
+numpy
+
+
+# --- LLM & API Clients ---
+# Official Python clients for the LLM APIs used in the response engine.
+openai
+google-generativeai
+
+
+# --- Database & Caching ---
+# The Python client for Redis, used by the Context Management System.
+redis
+
+
+# --- Hardware, Performance & Quantization ---
+# A Hugging Face library that simplifies running PyTorch models across different hardware (CPU, GPU, multi-GPU).
+# Essential for `device_map="auto"`.
+accelerate
+
+# Enables 8-bit and 4-bit quantization to run large models on consumer GPUs with less VRAM.
+bitsandbytes
+
+# Used by the response engine for monitoring GPU status.
+gputil
+
+# Used for monitoring system CPU and RAM.
+psutil
+
+
+# --- Utilities & Data Validation ---
+# Pydantic is used for robust data modeling and validation in the Context Management System.
+pydantic
+
+# Manages environment variables for securely loading API keys from a .env file.
+python-dotenv
+
+# Used to create colorful, user-friendly output in the terminal chat version.
+colorama
+
+# A fast tokenizer library used by the prompt engineering system to estimate token counts.
+tiktoken
+
+# The official client for interacting with the Hugging Face Hub (e.g., for login).
+huggingface_hub
+
+# TQDM provides clean and informative progress bars, used during model training.
+tqdm
