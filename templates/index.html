@@ -1,0 +1,97 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumora - Your Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- ===== SIDEBAR FOR HISTORY AND SETTINGS (NOW RESPONSIVE) ===== -->
+        <nav class="sidebar" id="sidebar">
+            <!-- UPDATED SIDEBAR HEADER -->
+            <div class="sidebar-header">
+                <!-- ADDED id="brand-home-btn" to make this clickable -->
+                <div class="brand-container" id="brand-home-btn">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="Kumora Mini Logo" class="sidebar-logo">
+                    <span class="sidebar-brand-name">Kumora</span>
+                </div>
+                <!-- This icon-only button remains for a compact option -->
+                <button class="new-chat-btn" id="new-chat-icon-btn" aria-label="New Chat">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+            </div>
+
+            <!-- RE-INTRODUCED a prominent text button for New Chat -->
+            <div class="sidebar-actions">
+                <button class="new-chat-text-btn" id="new-chat-text-btn">
+                    <i class="fa-solid fa-plus"></i> New Chat
+                </button>
+            </div>
+
+            <div class="chat-history" id="chat-history">
+                <p class="history-title">Recent Chats</p>
+                <ul id="history-list">
+                    <!-- Chat history items will be populated here -->
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="profile-section">
+                    <i class="fa-solid fa-user-circle"></i>
+                    <span>Profile & Settings</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ===== MAIN CHAT AREA ===== -->
+        <main class="chat-area">
+            <!-- NEW: Hamburger menu for mobile -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="greeting-view" id="greeting-view">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Kumora Logo" class="greeting-logo">
+                <p class="greeting-text">How can I support you today?</p>
+                <div class="prompt-starters">
+                    <button class="prompt-starter-btn" data-prompt="I'm feeling so stressed due to my assignment loads">"I'm feeling stressed about..."</button>
+                    <button class="prompt-starter-btn" data-prompt="I'm not sure how to handle a difficult conversation">"Help me think through a situation..."</button>
+                    <button class="prompt-starter-btn" data-prompt="I just want to celebrate a small win I had today">"I want to celebrate a small win..."</button>
+                </div>
+            </div>
+
+            <div class="chat-window-container" id="chat-window-container" style="display: none;">
+                <div class="chat-window" id="chat-window"></div>
+            </div>
+
+            <div class="chat-input-area">
+                <div id="typing-indicator" class="typing-indicator" style="display: none;">
+                    <span></span><span></span><span></span>
+                </div>
+                <form class="chat-input-form" id="chat-form">
+                    <button type="button" class="icon-btn" id="attach-file-btn" aria-label="Attach file">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </button>
+                    <input type="file" id="file-input" style="display: none;">
+                    <textarea id="message-input" placeholder="Share what's on your mind..." rows="1"></textarea>
+                    <button type="submit" class="icon-btn send-btn" id="send-btn" aria-label="Send">
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                </form>
+                <p class="footer-notice">Kumora can make mistakes. Consider checking important information.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+/* static/style.css */
+
+/* --- 1. Color and Font Palette Derived from the Logo --- */
+:root {
+    /* Fonts */
+    --font-family-brand: 'Lora', serif;
+    --font-family-body: 'Nunito Sans', sans-serif;
+
+    /* Core Colors */
+    --bg-color: #fef6f3; /* A very light, warm peachy-beige from the logo background */
+    --container-bg: #ffffff;
+    --text-main: #4e342e; /* A deep, warm brown for readability */
+    --text-light: #7a5f57;
+
+    /* Accent & Action Colors */
+    --primary-accent: #d57e7e; /* A muted, soft rose from the flower */
+    --primary-accent-deep: #6a3842; /* The deep maroon from the logo text */
+
+    /* Message Bubble Colors */
+    --kumora-msg-bg: #fdeee9; /* A very light, welcoming peach */
+    --user-msg-bg: #EAE6F8;   /* A complementary, soft lavender */
+}
+
+/* --- 2. General Body and Layout Styling --- */
+body {
+    font-family: var(--font-family-body);
+    background-color: var(--bg-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: var(--text-main);
+}
+
+.chat-container {
+    width: 90%;
+    max-width: 600px;
+    height: 90vh;
+    max-height: 800px;
+    background-color: var(--container-bg);
+    border-radius: 24px; /* Softer corners */
+    box-shadow: 0 15px 40px rgba(160, 110, 100, 0.15); /* Warmer, softer shadow */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- 3. Header with the New Logo --- */
+.chat-header {
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid #f0e6e2; /* A subtle separator */
+    background: linear-gradient(180deg, #ffffff 0%, #fffbf9 100%); /* Faint gradient */
+}
+
+.logo-image {
+    max-height: 110px; /* Control logo size */
+    margin-bottom: 0.25rem;
+}
+
+.tagline {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+/* --- 4. Chat Window and Message Bubbles --- */
+.chat-window {
+    flex-grow: 1;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.message {
+    padding: 0.8rem 1.2rem;
+    border-radius: 20px; /* More rounded bubbles */
+    max-width: 80%;
+    line-height: 1.5;
+    animation: pop-in 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.kumora-message {
+    background-color: var(--kumora-msg-bg);
+    align-self: flex-start;
+    border-bottom-left-radius: 5px; /* "Tail" effect */
+}
+
+.user-message {
+    background-color: var(--user-msg-bg);
+    color: var(--text-main);
+    align-self: flex-end;
+    border-bottom-right-radius: 5px; /* "Tail" effect */
+}
+
+@keyframes pop-in {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- 5. Polished Input Form --- */
+.chat-input-form {
+    display: flex;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #f0e6e2;
+    background: var(--container-bg);
+    gap: 0.75rem;
+}
+
+#message-input {
+    flex-grow: 1;
+    border: 1px solid #e0d8d4;
+    background-color: var(--bg-color);
+    border-radius: 25px;
+    padding: 0.8rem 1.25rem;
+    font-size: 1rem;
+    font-family: var(--font-family-body);
+    color: var(--text-main);
+    transition: all 0.2s ease-in-out;
+}
+
+#message-input::placeholder {
+    color: #b0a29d;
+}
+
+#message-input:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 0 3px rgba(213, 126, 126, 0.2);
+}
+
+.chat-input-form button {
+    background-color: var(--primary-accent-deep);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.8rem 1.75rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: var(--font-family-body);
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.chat-input-form button:hover {
+    background-color: #834954;
+}
+
+.chat-input-form button:active {
+    transform: scale(0.97);
+}
+
+
+/* --- 6. Typing Indicator --- */
+.typing-indicator {
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    height: 24px; /* Reserve space to prevent layout shift */
+}
+
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    background-color: #d1c4c0; /* Muted color */
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 2px;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
