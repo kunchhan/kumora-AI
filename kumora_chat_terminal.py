@@ -17,7 +17,7 @@ init()
 
 # Import your Kumora components
 from kumora_response_engine import *
-from response_generation.class_utils import *
+from prompt_engineering_module.class_utils import *
 
 class KumoraTerminalChat:
     """Terminal-based chat interface for Kumora"""

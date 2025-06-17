@@ -26,9 +26,9 @@ import GPUtil
 from emotion_intelligence_system.emotion_classifier import *
 from context_management.context_management_system import *
 from context_management.kumora_context import *
-from response_generation.prompt_engineering_system import *
-from response_generation.class_utils import *
-from response_generation.prompt_utils import *
+from prompt_engineering_module.prompt_engineering_system import *
+from prompt_engineering_module.class_utils import *
+from prompt_engineering_module.prompt_utils import *
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

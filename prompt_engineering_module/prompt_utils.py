@@ -5,7 +5,7 @@ It is imported by the prompt generation system.
 
 from typing import Dict, List, Optional, Tuple, Any, Union
 
-from response_generation.class_utils import SupportType
+from prompt_engineering_module.class_utils import SupportType
 
 
 # For reference, all target emotions

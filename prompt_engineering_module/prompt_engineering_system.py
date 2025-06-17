@@ -16,8 +16,8 @@ import hashlib
 from jinja2 import Template, Environment, FileSystemLoader, select_autoescape
 import tiktoken
 from abc import ABC, abstractmethod
-from response_generation.prompt_utils import COT_MAPPER, EMOTION_MODIFIERS, RESPONSE_MAPPER
-from response_generation.class_utils import SupportType, EmpathyLevel, ResponseStyle, EmotionalContext, UserContext, PromptConfig
+from prompt_engineering_module.prompt_utils import COT_MAPPER, EMOTION_MODIFIERS, RESPONSE_MAPPER
+from prompt_engineering_module.class_utils import SupportType, EmpathyLevel, ResponseStyle, EmotionalContext, UserContext, PromptConfig
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

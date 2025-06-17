@@ -7,7 +7,7 @@ from werkzeug.exceptions import BadRequest
 
 # Import your Kumora engine and initialization function
 # We adjust the import path because the modules are now in a sub-directory
-from response_generation.class_utils import *
+from prompt_engineering_module.class_utils import *
 from kumora_response_engine import *
 
 # --- App Initialization ---
