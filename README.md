@@ -7,7 +7,7 @@
 <p align="center">
   <strong>Kumora begins where traditional AI falls silent—when emotion needs a mirror, not just a solution.</strong>
   <br><br>
-  <a href="#introduction">Introduction</a><br><br> •
+  • <a href="#introduction">Introduction</a><br><br> •
   <a href="#features">Key Features</a><br><br> •
   <a href="#architecture">System Architecture</a><br><br> •
   <a href="#technology-stack">Tech Stack</a><br><br> •
@@ -137,7 +137,7 @@ Open your web browser and navigate to:
 
 You should now see the Kumora chat interface and can begin your first conversation!
 
-## 📂 Project Structure
+## Project Structure
 
 The project is organized into modular components for clarity and maintainability.
 
@@ -159,7 +159,7 @@ kumora-project/
 └── requirements.txt        # Python dependencies
 ```
 
-## 🤝 Contribution
+## Contribution
 
 This project was developed by a two-person team:
 
