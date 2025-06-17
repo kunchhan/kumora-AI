@@ -155,8 +155,9 @@ kumora-project/
 │    ├── prompt_engineering_system.py
 │    └── prompt_utils.py
 ├── static/                   # CSS and JavaScript files
-│   ├── style.css
-│   └── main.js
+│   ├── logo.png
+│   ├── main.js
+│   └── style.css
 ├── templates/                # Flask HTML templates
 │   └── index.html
 ├── .env                      # Secret API keys (DO NOT COMMIT)
