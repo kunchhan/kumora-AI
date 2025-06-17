@@ -7,12 +7,12 @@
 <p align="center">
   <strong>Kumora begins where traditional AI falls silent—when emotion needs a mirror, not just a solution.</strong>
   <br><br>
-  <a href="#introduction">Introduction</a> •
-  <a href="#features">Key Features</a> •
-  <a href="#architecture">System Architecture</a> •
-  <a href="#technology-stack">Tech Stack</a> •
-  <a href="#getting-started">Getting Started</a> •
-  <a href="#project-structure">Project Structure</a> •
+  <a href="#introduction">Introduction</a><br><br> •
+  <a href="#features">Key Features</a><br><br> •
+  <a href="#architecture">System Architecture</a><br><br> •
+  <a href="#technology-stack">Tech Stack</a><br><br> •
+  <a href="#getting-started">Getting Started</a><br><br> •
+  <a href="#project-structure">Project Structure</a><br><br> •
   <a href="#contribution">Contribution</a>
 </p>
 
@@ -37,7 +37,7 @@ This project confronts that challenge by building an AI companion architected no
 Kumora's intelligence is derived from the seamless integration of three core modules:
 
 <p align="center">
-  <img src="https://imgur.com/undefined.png" alt="Kumora System Architecture Diagram" width="800">
+  <img src="https://imgur.com/76L9Hsq.png" alt="Kumora System Architecture Diagram" width="800">
 </p>
 
 1.  **Emotion Intelligence Module:**
