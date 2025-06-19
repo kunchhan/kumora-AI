@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KUMORA COMPANION</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}" />
+     
+  
+  </head>
+  <body id="kumora-chat">
+   
+    <div class="chat-container">
+      <div class="header-wrapper">
+      <div class="header">
+      <div class="logo">
+        <img src="{{ url_for('static', filename='image/kumora-logo.png') }}" alt="Kumora Logo" class="logo-image">
+     </div>
+     <div class="menu">  <span class="chaticon" onclick="goToWelcome(); return false;"><i class="bi bi-house"></i></span> <i class="bi bi-list"></i></div>
+  </div></div>
+  <div class="top-bar">
+    <!--<span class="chaticon" onclick="goToWelcome(); return false;"> Home</span>-->
+    <span class="chaticon">Chat With Kumora</span>
+    <span class="chaticon"  onclick="ResetChat(); return false;" >Start Over</span>
+    <div id="welcome-section">
+        <div id="welcome-message"></div>
+    </div>
+  </div>
+    <div class="chat-container">
+      
+        <div class="messages_container  d-flex flex-column" id ='messages_container'>
+                
+        </div>
+        
+      <div class="chat-input-wrapper">
+        <div class="chat-input-bar">
+          <input type="text" class="form-control" id="user-input" placeholder="Start typing" onkeypress="handleKeyPress(event)"/>
+          <label for="file-upload" class="icon-btn">
+            <i class="bi bi-image"></i>
+            <input type="file" id="file-upload" hidden />
+          </label>
+          <i class="bi bi-emoji-smile icon-btn" id="emoji-btn"></i>
+          <i class="bi bi-mic-fill icon-btn"></i>
+          
+        </div>
+        <audio id="kumora-audio" loop>
+            <source src="{{ url_for('static', filename='audio.mp3') }}" type="audio/mpeg">
+          </audio>
+            <div class="audio-icon" id="audio-toggle">
+            <i class="bi bi-volume-up" id="audio-icon"></i>
+            </div>
+        </div>
+        <!-- Emoji Picker Container -->
+      <div id="emoji-picker" class="emoji-picker"></div>
+    </div>
+</div>
+<!-- PRO Card Button -->
+<div class="pro-button-container">
+    <button class="pro-button" id="pro-button">
+        
+      <span class="">       
+      <h4>Step into Lamara</h4>
+    </span>
+    </button>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{{ url_for('static', filename='/js/chat.js') }}" type="module"></script>
+    <script>
+        let currentQuestion = 0;
+        const questions = {{ questions|tojson }};
+        const translate = {{ translate|tojson }}
+        const language = {{language|tojson }}
+
+        const audio = document.getElementById('kumora-audio');
+        const toggleBtn = document.getElementById('audio-toggle');
+        const icon = document.getElementById('audio-icon');
+      
+        toggleBtn.addEventListener('click', () => {
+          if (audio.paused) {
+            audio.play();
+            icon.classList.remove('bi-volume-mute');
+            icon.classList.add('bi-volume-up');
+          } else {
+            audio.pause();
+            icon.classList.remove('bi-volume-up');
+            icon.classList.add('bi-volume-mute');
+          }
+        });
+
+        function typeWriter(text, element, callback) {
+            let i = 0;
+            
+            const chatBlock = document.querySelector('.messages_container');
+        
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+        
+                    chatBlock.scrollTo({
+                        top: chatBlock.scrollHeight,
+                        behavior: "smooth"
+                    });
+        
+                    setTimeout(type, 0); // Typing speed
+                } else {
+                    if (callback) callback();
+                }
+            }
+        
+            type();
+        }
+
+        function startChat() {
+            const messagesContainer = document.querySelector('.messages_container');
+        
+            // Create first chat bubble
+            const welcomeMsg1 = document.createElement('div');
+            welcomeMsg1.className = 'message kumora';
+            messagesContainer.appendChild(welcomeMsg1);
+        
+            typeWriter(translate.welcome, welcomeMsg1, () => {
+                const welcomeMsg2 = document.createElement('div');
+                welcomeMsg2.className = 'message kumora';
+                messagesContainer.appendChild(welcomeMsg2);
+        
+                typeWriter(translate.iam_here, welcomeMsg2, () => {
+                    askQuestion(0);
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', startChat);
+        
+        function askQuestion(index) {
+            const chat = document.getElementById('messages_container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message kumora';
+            chat.appendChild(messageDiv);
+            typeWriter(questions[index], messageDiv);
+        }
+
+        function aiThinking(status) {
+            if(status =='show')
+            {
+                const chat = document.getElementById('messages_container');
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'message kumora thinking';
+            
+                // Add image inside it
+                const loadingImg = document.createElement('img');
+                loadingImg.src = "{{ url_for('static', filename='image/thinking-white.gif') }}";
+                loadingImg.alt = "Kumora is thinking...";
+                loadingImg.className = "thinking-image";
+            
+                loadingDiv.appendChild(loadingImg);
+                chat.appendChild(loadingDiv);
+            
+                // Scroll to bottom
+                chat.scrollTo({
+                    top: chat.scrollHeight,
+                    behavior: "smooth"
+                });
+            } else {
+                const thinkingBubble = document.querySelector('.thinking');
+                if (thinkingBubble) {
+                    thinkingBubble.remove();
+                }
+            }
+        
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendResponse();
+            }
+        }
+
+            function sendResponse() {
+                const input = document.getElementById('user-input');
+                const answer = input.value.trim();
+                if (!answer) return;
+                input.value = '';
+              
+                const chat = document.getElementById('messages_container');
+                chat.innerHTML += `<div class="message user">You: ${answer}</div>`;
+              
+                const QueriesIndex = currentQuestion;
+              
+                // Save the Client Answer and Dialog 
+                fetch('/save_answer', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ answer, QueriesIndex: QueriesIndex })
+                })
+                .then(r => r.json())
+                .then(data => {
+                  
+                  // Show analysis if available
+                  if (data.analysis) {
+                    const analysisDiv = document.createElement('div');
+                    analysisDiv.className = 'message analysis';
+                    analysisDiv.innerHTML = `Analysis: ${JSON.stringify(data.analysis)}`;
+                    chat.appendChild(analysisDiv);
+                  }
+                  
+                  aiThinking("show");
+              
+                  // Call Chat Backend with analysis
+                  fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                      prompt: answer,
+                      analysis: data.analysis 
+                    })
+                  })
+                  .then(r => r.json())
+                  .then(chatData => {
+                    aiThinking("hide");
+                    // Display LLM Reply with Typing effect
+                    const aiMsgDiv = document.createElement('div');
+                    aiMsgDiv.className = 'message kumora';
+                    chat.appendChild(aiMsgDiv);
+                    typeWriter(chatData.reply, aiMsgDiv);
+                  })
+              .catch(console.error);
+            })
+            .catch(console.error);
+          }
+          
+
+          function generateItinerary() {
+            
+            aiThinking("show");
+            fetch('/generate_itinerary')
+              .then(r => r.json())
+              .then(data => {
+                aiThinking("hide");
+                const container = document.getElementById('messages_container');
+          
+                // Create a div that preserves newlines
+                const suggestionDiv = document.createElement('div');
+                suggestionDiv.className = 'message suggestion';
+                suggestionDiv.style.whiteSpace = 'pre-wrap';  
+                suggestionDiv.textContent = data.itinerary;
+          
+                container.appendChild(suggestionDiv);
+              });
+          }
+          function goToWelcome() {
+            //  GO to Flask welcome route Home Page
+            window.location.href = "{{ url_for('welcome') }}";
+          }
+
+          function ResetChat() {
+            // Reset the chat by clearing the messages and session
+            console.log("Resetting chat...");
+            window.location.href = "{{ url_for('reset') }}";
+          }
+          
+    </script>
+
+  </body>
+</html>

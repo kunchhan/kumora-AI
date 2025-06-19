@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KUMORA COMPANION</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}" />
+     
+  
+  </head>
+  <body class="">
+    <div class="chat-container">
+      <div class="header-wrapper">
+      <div class="header">
+      <div class="logo">
+     </div>
+     <div class="menu">  <span class="chaticon" onclick="goToWelcome(); return false;"><i class="bi bi-house"></i></span> <i class="bi bi-list"></i></div>
+  </div></div>
+  <div class="top-bar">
+    <!--<span class="chaticon" onclick="goToWelcome(); return false;"> Home</span>-->
+    <span class="chaticon">Chat</span>
+    <div id="welcome-section">
+        <div id="welcome-message"></div>
+    </div>
+  </div>
+    <div class="chat-container">
+      
+        <div class="messages_container  d-flex flex-column" id ='messages_container'>
+                
+        </div>
+        
+      <div class="chat-input-wrapper">
+        <div class="chat-input-bar">
+          <input type="text" class="form-control" id="user-input" placeholder="Start typing" onkeypress="handleKeyPress(event)"/>
+          <label for="file-upload" class="icon-btn">
+            <i class="bi bi-image"></i>
+            <input type="file" id="file-upload" hidden />
+          </label>
+          <i class="bi bi-emoji-smile icon-btn" id="emoji-btn"></i>
+          <i class="bi bi-mic-fill icon-btn"></i>
+          
+        </div>
+        <audio id="kumora-audio" autoplay loop>
+            <source src="{{ url_for('static', filename='audio.mp3') }}" type="audio/mpeg">
+          </audio>
+            <div class="audio-icon" id="audio-toggle">
+            <i class="bi bi-volume-up" id="audio-icon"></i>
+            </div>
+        </div>
+        <!-- Emoji Picker Container -->
+      <div id="emoji-picker" class="emoji-picker"></div>
+    </div>
+</div>
+<!-- PRO Card Button -->
+<div class="pro-button-container">
+    <button class="pro-button" id="pro-button">
+        <img src="{{ url_for('static', filename='/image/gem.png') }}" class="diamond-image"/>
+      <span class="">       
+      <h4>Explor to Lamara</h4>
+      <p>Your Something something partner.</p>
+    </span>
+    </button>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{{ url_for('static', filename='/js/chat.js') }}" type="module"></script>
+    <script>
+        let currentQuestion = 0;
+        const questions = {{ questions|tojson }};
+        const translate = {{ translate|tojson }}
+        const language = {{language|tojson }}
+
+        const audio = document.getElementById('kumora-audio');
+        const toggleBtn = document.getElementById('audio-toggle');
+        const icon = document.getElementById('audio-icon');
+      
+        toggleBtn.addEventListener('click', () => {
+          if (audio.paused) {
+            audio.play();
+            icon.classList.remove('bi-volume-mute');
+            icon.classList.add('bi-volume-up');
+          } else {
+            audio.pause();
+            icon.classList.remove('bi-volume-up');
+            icon.classList.add('bi-volume-mute');
+          }
+        });
+
+        function typeWriter(text, element, callback) {
+            let i = 0;
+            
+            const chatBlock = document.querySelector('.messages_container');
+        
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+        
+                    chatBlock.scrollTo({
+                        top: chatBlock.scrollHeight,
+                        behavior: "smooth"
+                    });
+        
+                    setTimeout(type, 0); // Typing speed
+                } else {
+                    if (callback) callback();
+                }
+            }
+        
+            type();
+        }
+
+        function startChat() {
+            const messagesContainer = document.querySelector('.messages_container');
+        
+            // Create first chat bubble
+            const welcomeMsg1 = document.createElement('div');
+            welcomeMsg1.className = 'message kumora';
+            messagesContainer.appendChild(welcomeMsg1);
+        
+            typeWriter(translate.welcome, welcomeMsg1, () => {
+                const welcomeMsg2 = document.createElement('div');
+                welcomeMsg2.className = 'message kumora';
+                messagesContainer.appendChild(welcomeMsg2);
+        
+                typeWriter(translate.iam_here, welcomeMsg2, () => {
+                    askQuestion(0);
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', startChat);
+        
+        function askQuestion(index) {
+            const chat = document.getElementById('messages_container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message kumora';
+            chat.appendChild(messageDiv);
+            typeWriter(questions[index], messageDiv);
+        }
+
+        function aiThinking(status) {
+            if(status =='show')
+            {
+                const chat = document.getElementById('messages_container');
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'message kumora thinking';
+            
+                // Add image inside it
+                const loadingImg = document.createElement('img');
+                loadingImg.src = "{{ url_for('static', filename='image/thinking-white.gif') }}";
+                loadingImg.alt = "Kumora is thinking...";
+                loadingImg.className = "thinking-image";
+            
+                loadingDiv.appendChild(loadingImg);
+                chat.appendChild(loadingDiv);
+            
+                // Scroll to bottom
+                chat.scrollTo({
+                    top: chat.scrollHeight,
+                    behavior: "smooth"
+                });
+            } else {
+                const thinkingBubble = document.querySelector('.thinking');
+                if (thinkingBubble) {
+                    thinkingBubble.remove();
+                }
+            }
+        
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendResponse();
+            }
+        }
+
+        function sendResponse() {
+            const input = document.getElementById('user-input');
+            const answer = input.value.trim();
+            if (!answer) return;
+            input.value = '';
+          
+            const chat = document.getElementById('messages_container');
+            chat.innerHTML += `<div class="message user">You: ${answer}</div>`;
+          
+            const answeredIndex = currentQuestion;
+          
+            // Save the Client Anser and Dialog 
+            fetch('/save_answer', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ answer, questionIndex: answeredIndex })
+            })
+            .then(r => r.json())
+            .then(data => {
+              currentQuestion = data.nextQuestion; 
+              aiThinking("show");
+          
+              // Call Chat Backend at begining
+              fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ next_question_index: currentQuestion })
+              })
+              .then(r => r.json())
+              .then(chatData => {
+                aiThinking("hide");
+          
+                // Display LLM Reply with Typing effect
+                const aiMsgDiv = document.createElement('div');
+                aiMsgDiv.className = 'message kumora';
+                chat.appendChild(aiMsgDiv);
+          
+                typeWriter(chatData.reply, aiMsgDiv, () => {
+                  if (answeredIndex === 0) {
+                    //  add  custom message  After the LLM reply
+                    const customDiv = document.createElement('div');
+                    customDiv.className = 'message kumora';
+                    chat.appendChild(customDiv);
+          
+                    typeWriter(
+                        translate.let_plan,
+                      customDiv,
+                      // Directyl Ask Q1 for your plan
+                      () => askQuestion(currentQuestion)
+                    );
+                  } else if (currentQuestion < questions.length) {
+                    // Based on Question Customize Question 
+                    setTimeout(() => askQuestion(currentQuestion), 500);
+                  }else if (currentQuestion == questions.length) {
+                    // Final itinerary
+                    chat.innerHTML += `
+                      <div class="message kumora">
+                        ✨ Based on your interest, I’m now crafting your personalized itinerary…
+                      </div>`;
+                    generateItinerary();
+                    
+                  }
+                  else {
+                    const chat = document.getElementById('messages_container');
+                    chat.innerHTML += `
+                      <div class="message kumora">
+                        Request Completed<br>
+                        <a href="#" onclick="location.reload(); return false;">Ask again</a>
+                      </div>
+                    `;
+                    // scroll to bottom if you need:
+                    chat.scrollTop = chat.scrollHeight;
+                  }
+                });
+              })
+              .catch(console.error);
+            })
+            .catch(console.error);
+          }
+          
+
+          function generateItinerary() {
+            
+            aiThinking("show");
+            fetch('/generate_itinerary')
+              .then(r => r.json())
+              .then(data => {
+                aiThinking("hide");
+                const container = document.getElementById('messages_container');
+          
+                // Create a div that preserves newlines
+                const suggestionDiv = document.createElement('div');
+                suggestionDiv.className = 'message suggestion';
+                suggestionDiv.style.whiteSpace = 'pre-wrap';  
+                suggestionDiv.textContent = data.itinerary;
+          
+                container.appendChild(suggestionDiv);
+              });
+          }
+          function goToWelcome() {
+            //  GO to Flask welcome route Home Page
+            window.location.href = "{{ url_for('welcome') }}";
+          }
+          
+    </script>
+
+  </body>
+</html>
