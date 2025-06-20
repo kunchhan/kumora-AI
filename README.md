@@ -159,7 +159,7 @@ _Installation guidance along with project start._
    ```sh
    pip install -r requirements.txt
    ```
-3. Configure Environment Variables from sample.env sample and rename to .env update KEYS
+3. Configure Environment Variables from .env.example sample and rename to .env update KEYS
    ```js
     OPENAI_API_KEY="your_openai_api_key_here"
    ```
